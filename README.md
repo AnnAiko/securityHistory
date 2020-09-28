@@ -7,8 +7,7 @@ Web-приложение "Ценные бумаги и их история"
 
 Приложение запускается с главной страници index.html  
 JavaScript (запросы GET/POST) -> Java (Servlet) -> БД  
-                              <-                <-
-
+                              
 Использовалось:  
 СУБД - PostgreSQL   
 Сервер - Apache Tomcat 9  
