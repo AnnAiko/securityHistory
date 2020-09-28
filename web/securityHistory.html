@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            function scoreGame() {
+                var urlParams = new URLSearchParams(window.location.search);
+                var mySort = urlParams.get('sort');
+                var myFilter = urlParams.get('filter');
+                var myDate = urlParams.get('date');
+                $.get('/Securities/ShowSecurityHistory', {sort: mySort, filter: myFilter, date: myDate}, function (data) {
+                    //console.log(data);
+                    let table = document.querySelector('#table');
+                    var text = "";
+                    for (var key in data) {
+                        let tr = document.createElement('tr');
+                        let tdS = document.createElement('td');
+                        tdS.innerHTML = data[key].secid;
+                        tr.appendChild(tdS);
+                        //
+                        let tdR = document.createElement('td');
+                        tdR.innerHTML = data[key].regnumber;
+                        tr.appendChild(tdR);
+                        //
+                        let tdN = document.createElement('td');
+                        tdN.innerHTML = data[key].name;
+                        tr.appendChild(tdN);
+                        //
+                        let tdE = document.createElement('td');
+                        tdE.innerHTML = data[key].emitent;
+                        tr.appendChild(tdE);
+                        //
+                        let tdU = document.createElement('td');
+                        tdU.innerHTML = data[key].tradedate;
+                        tr.appendChild(tdU);
+                        //
+                        let tdD = document.createElement('td');
+                        tdD.innerHTML = data[key].numtrades;
+                        tr.appendChild(tdD);
+                        //
+                        let tdO = document.createElement('td');
+                        tdO.innerHTML = data[key].open;
+                        tr.appendChild(tdO);
+                        //
+                        let tdC = document.createElement('td');
+                        tdC.innerHTML = data[key].close;
+                        tr.appendChild(tdC);
+                        table.appendChild(tr);
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body onload="scoreGame();">
+    <center> 
+        <h3>Securities + Histories</h3>
+        <div id="conteiner"> 
+            <table cellspacing="10" border="1" id="table">
+                <thead>
+                    <tr>
+                        <th>Secid</th> 
+                        <th>Regnumber</th>
+                        <th>Name</th>
+                        <th>Emitent_title</th>
+                        <th>Tradedate</th>
+                        <th>Numtrades</th>
+                        <th>Open</th>
+                        <th>Close</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+        <p><a href='/Securities/'>&larr; </a>
+    </center>
+</body>
+</html>

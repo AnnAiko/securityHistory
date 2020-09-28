@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Securities</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            function scoreGame() {
+                var urlParams = new URLSearchParams(window.location.search);
+                var myPage = urlParams.get('page');
+                $.get('/Securities/SecurityServlet', {page: myPage}, function (data) {
+                    let table = document.querySelector('#table');
+                    var text = "";
+                    for (var key in data) {
+                        let tr = document.createElement('tr');
+                        let tdS = document.createElement('td');
+                        tdS.innerHTML = data[key].secid;
+                        tr.appendChild(tdS);
+                        let tdN = document.createElement('td');
+                        tdN.innerHTML = data[key].name;
+                        tr.appendChild(tdN);
+                        let tdR = document.createElement('td');
+                        tdR.innerHTML = "<button onclick='read(" + data[key].id + ");'>read</button>";
+                        tr.appendChild(tdR);
+                        let tdU = document.createElement('td');
+                        tdU.innerHTML = "<button onclick='update(" + data[key].id + ");'>update</button>";
+                        tr.appendChild(tdU);
+                        let tdD = document.createElement('td');
+                        tdD.innerHTML = "<button onclick='dselete(" + data[key].id + ");'>delete</button>";
+                        tr.appendChild(tdD);
+                        table.appendChild(tr);
+                    }
+                    count();
+                });
+
+            }
+            function count( ) {
+                $.post('/Securities/SecurityServlet', function (data) {
+                    var countPage = Math.ceil(data / 25);
+                    console.log(data);
+                    var html = "";
+                    for (let i = 0; i < countPage; i++)
+                    {
+                        html += " <button onclick='show(" + i + ");'>" + i + "</button> ";
+                    }
+                    document.getElementById("but").innerHTML = html;
+                });
+            }
+            function show(page) {
+                location.href = "/Securities/Security/showList.html?page=" + page;
+            }
+
+            function read(id) {
+                location.href = "/Securities/Security/read.html?id=" + id;
+            }
+            function update(id) {
+                location.href = "/Securities/Security/updateSecurity.html?id=" + id;
+            }
+            //Удалить ценную бумагу
+            function dselete(id) {
+                location.href = "/Securities/DelSecServlet?id=" + id;
+            }
+            //Добавить ценную бумагу
+            function create( ) {
+                location.href = "/Securities/Security/createSecurity.html";
+            }
+        </script>
+    </head>
+    <body onload="scoreGame();">
+    <center> 
+        <h3>Securities</h3>
+        Добавить ценную бумагу:   <button onclick="create();">create</button>
+        <p>
+        <div>Показаны первые 25 записей: </div>
+        <div id="conteiner"> 
+            <table cellspacing="10" border="1" id="table">
+                <tr>
+                    <th>Secid</th> 
+                    <th>Name</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </table>
+        </div> 
+        <div id="but"> </div>
+        <p><a href='/Securities/'>&larr;</a>
+    </center>
+</body>
+</html>

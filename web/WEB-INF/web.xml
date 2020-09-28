@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" version="2.4"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http:/java.sun.com/dtd/web-app_2_3.dtd">
+    
+    <!-- read servlet -->
+    <!--<servlet>
+        <servlet-name>read</servlet-name>
+        <servlet-class>servlets.security.ReadSecServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>read</servlet-name>
+        <url-pattern>/Security/read.html</url-pattern>
+    </servlet-mapping>-->
+    
+     <!-- read servlet -->
+    <!--<servlet>
+        <servlet-name>read</servlet-name>
+        <servlet-class>servlets.security.SecurityServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>read</servlet-name>
+        <url-pattern>/Security/showList.html</url-pattern>
+    </servlet-mapping>-->
+</web-app>

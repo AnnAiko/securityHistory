@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Securities</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            function security() {
+                location.href = "/Securities/Security/showList.html?page=0";
+            }
+            function securityHistory() {
+                var sort = $('input[name=sort]:checked').val();
+                var search = $('input[name=search]').val();
+                var dayF = $('select[name=day]').val();
+                var monthF = $('select[name=month]').val();
+                var yearsF = $('select[name=years]').val();
+
+                var date = "";
+                if (yearsF !== "") {
+                    date = yearsF + "-";
+                }
+                if (monthF !== "") {
+                    let month = ["Январь", "Февраль", "Март",
+                        "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь",
+                        "Октябрь", "Ноябрь", "Декабрь"];
+                    for (var i = 0, len = month.length; i < len; i++) {
+                        if (month[i] === monthF)
+                        {
+                            if ((i + 1) < 10) {
+                                date += "0" + (i + 1) + "-";
+                                break;
+                            } else {
+                                date += (i + 1) + "-";
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (dayF !== "") {
+                    if (Number.parseInt(dayF) < 10) {
+                        date += "0" + dayF;
+                    } else {
+                        date += dayF;
+                    }
+                }
+                location.href = "/Securities/securityHistory.html?sort=" + sort +
+                        "&filter=" + search + "&date=" + date;
+            }
+        </script>
+    </head>
+    <body>
+    <center>
+        <h3>File Upload Security</h3>
+        <form method="post" action="UploadServlet" enctype="multipart/form-data">
+            Select file to upload: <input type="file" name="file" size="60" /><br />
+            <br /> <input type="submit" value="Upload" />
+        </form>
+        <p>
+        <h3>File Upload History</h3>
+        <form method="post" action="UploadHistoryServlet" enctype="multipart/form-data">
+            Select file to upload: <input type="file" name="file" size="60" /><br />
+            <br /> <input type="submit" value="Upload" />
+        </form>
+        <p>
+            Показать ценные бумаги:   <button id="securities" onclick="security();">Securities</button>
+        <p>
+            <!--    Показать историю: <button id="histories" >Histories </button>
+            <p><p><input name="sort" type="radio" value="without" checked> без сортировки</p>
+            -->
+            Sort: 
+        <p><input name="sort" type="radio" value="1" checked> по secid</p>
+        <p><input name="sort" type="radio" value="2"> по regnumber</p>
+        <p><input name="sort" type="radio" value="3"> по name</p>
+
+        Filter (по emitent_title): <input name="search" />
+        <p> 
+            Filter (по tradedate):
+            Day: <select name="day" id="day">
+                <script type="text/javascript">
+                    var html = "";
+                    html += '<option >' + " " + '</option>';
+                    for (let i = 1; i <= 31; i++) {
+                        html += '<option >' + i + '</option>';
+                    }
+                    document.getElementById("day").innerHTML = html;
+                </script>
+            </select>
+            Month:  <select name="month" id="month">
+                <script type="text/javascript">
+                    var html = "";
+                    var month = ["Январь", "Февраль", "Март",
+                        "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь",
+                        "Октябрь", "Ноябрь", "Декабрь"];
+                    var html = "";
+                    html += '<option >' + " " + '</option>';
+                    for (let i = 0; i < month.length; i++) {
+                        html += '<option >' + month[i] + '</option>';
+                    }
+                    document.getElementById("month").innerHTML = html;
+                </script>
+            </select>
+            Year: <select name="years" id="years">
+                <script type="text/javascript">
+                    var html = "";
+                    var years = [1995, 1996, 1997, 1998, 1999, 2000,
+                        2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
+                        2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018,
+                        2019, 2020];
+                    html += '<option >' + " " + '</option>';
+                    for (let i = 0; i < years.length; i++) {
+                        html += '<option >' + years[i] + '</option>';
+                    }
+                    document.getElementById("years").innerHTML = html;
+                </script>
+            </select>
+            <br><br>
+            Показать ценные бумаги и их историю: <button  id="secHis" onclick="securityHistory();">Securities + Histories</button>
+    </center>
+    <!--<script src="js/script.js"></script>-->
+</body>
+
+</html>
